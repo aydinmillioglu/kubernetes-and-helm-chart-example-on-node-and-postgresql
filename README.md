@@ -1,2 +1,2 @@
 # Node_API
-Node API with Express and Postgres
+Pipeline for Node API with Express and Postgres
