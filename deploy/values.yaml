@@ -1,14 +1,16 @@
-# Default values for api-deploy.
+# Default values for deploy.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
+initialDelaySeconds: 10
+
 image:
   repository: aydinmillioglu/node_api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  tag: 1.2.0
 
 imagePullSecrets: []
 nameOverride: ""
@@ -21,7 +23,7 @@ serviceAccount:
   annotations: {}
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: "admin"
 
 podAnnotations: {}
 

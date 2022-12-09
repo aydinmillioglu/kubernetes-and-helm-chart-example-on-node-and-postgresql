@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "api-deploy.fullname" . }}
+  name: {{ include "deploy.fullname" . }}
   labels:
-    {{- include "api-deploy.labels" . | nindent 4 }}
+    {{- include "deploy.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "api-deploy.selectorLabels" . | nindent 6 }}
+      {{- include "deploy.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "api-deploy.selectorLabels" . | nindent 8 }}
+        {{- include "deploy.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "api-deploy.serviceAccountName" . }}
+      serviceAccountName: {{ include "deploy.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,13 +38,15 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
             httpGet:
-              path: /
-              port: http
+              path: /food
+              port: {{ .Values.service.port }}
           readinessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
             httpGet:
-              path: /
-              port: http
+              path: /food
+              port: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
