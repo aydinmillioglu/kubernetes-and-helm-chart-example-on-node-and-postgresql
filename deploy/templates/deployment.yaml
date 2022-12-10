@@ -4,6 +4,11 @@ metadata:
   name: {{ include "deploy.fullname" . }}
   labels:
     {{- include "deploy.labels" . | nindent 4 }}
+env:
+    {{- range $key, $val := .Values.env }}
+    - name: {{ $key }}
+      value: {{ $val }}
+    {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -32,6 +37,15 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: DATABASE_URL_TEST
+              value: "postgresql://api_user:api_user@host.docker.internal:5432/foodie_test"
+            - name: DATABASE_URL
+              value: "postgresql://api_user:api_user@host.docker.internal:5432/foodie"
+            - name: PORT
+              value: "3000"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
