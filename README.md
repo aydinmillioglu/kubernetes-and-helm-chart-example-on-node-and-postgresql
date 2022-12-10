@@ -6,16 +6,10 @@ Origin app:
 
 ## About the Application
 This application can be used for API Integrations to an external POSTGRESQL database. It is working on kubernetes clusters and deployment is done on Helm.
+
 There are two databases on the postgresql external db: foodie and foodie_test
 
 ## Installation
-To build the application for container with dockerfile:
-  - You can run the following command on the path of the project to run it in container.
-  ```sh
-    docker build .
-  ```
-  - It will use the dockerfile that includes environment variables and make the necessary installations.
-
 For deployment, Helm is used for package managing. Following command is used for create a new helm chart
    ```sh
     helm create deploy
