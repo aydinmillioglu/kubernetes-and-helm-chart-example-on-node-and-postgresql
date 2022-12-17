@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 2
+replicaCount: 1
 
 initialDelaySeconds: 10
 
@@ -41,6 +41,7 @@ securityContext: {}
 service:
   type: NodePort
   port: 3000
+  nodePort: 30010
 
 ingress:
   enabled: false
