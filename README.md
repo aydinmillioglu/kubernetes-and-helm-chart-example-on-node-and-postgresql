@@ -5,7 +5,7 @@ Origin app:
   https://github.com/ishan-is-me/Node_API
 
 ## About the Application
-This application can be used for API Integrations to an external POSTGRESQL database. It is working on kubernetes clusters and deployment is done on Helm.
+This application can be used for API Integrations to an external POSTGRESQL database. It is working on kubernetes clusters and deployment is done via Helm.
 
 There are two databases on the postgresql external db: foodie and foodie_test
 
